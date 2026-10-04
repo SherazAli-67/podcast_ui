@@ -16,4 +16,11 @@ class AssetRes {
 
   static const welcomePageHeaderRings = 'assets/images/welcome_page_header_rings.png';
   static const welcomePageImg = 'assets/images/welcome_page_img.png';
+  static const imgFeaturedNickJohn = 'assets/images/img_featured_nick_john.png';
+  static const imgAngryCoach = 'assets/images/img_angry_coach.png';
+  static const imgGiveItAShot = 'assets/images/img_give_it_a_shot.png';
+  static const imgAmazingLife = 'assets/images/img_amazing_life.png';
+  static const imgFamilyMatters = 'assets/images/img_family_matters.png';
+  static const imgFeelings = 'assets/images/img_feelings.png';
+  static const imgProfile = 'assets/images/img_profile.png';
 }
