@@ -22,7 +22,7 @@ class AssetRes {
   static const imgAmazingLife = 'assets/images/amazing_life_podcast_img.png';
   static const imgFamilyMatters = 'assets/images/third_podcast_img.png';
   static const imgFeelings = 'assets/images/last_podcat_img.png';
-  static const imgProfile = 'assets/images/hold_it_on_podcast_img.png';
+  static const holdItOnImg = 'assets/images/hold_it_on_podcast_img.png';
   static const decoratedBanner = 'assets/images/decorated_banner.png';
   static const nickImg = 'assets/images/nick_img.png';
   static const johnImg = 'assets/images/john_img.png';

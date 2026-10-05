@@ -46,31 +46,47 @@ class _HomeScreenState extends State<HomeScreen> {
                   _buildHeader(),
                   _buildSectionTitle(),
                   _buildFeaturedCarousel(),
-
                   _buildCategoryChips(),
-
                   _buildShowsGrid(shows),
-                /*  Expanded(
-                    child: ListView(
-                      padding: .only(bottom: NumberConstant.sectionSpacing),
-                      children: [
-                        Column(
-                          crossAxisAlignment: .start,
-                          spacing: NumberConstant.sectionSpacing,
-                          children: [
-                            _buildSectionTitle(),
-                            _buildFeaturedCarousel(),
-                            _buildCategoryChips(),
-                            _buildShowsGrid(shows),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),*/
                 ],
               ),
             ),
           ),
+          Positioned(
+            bottom: 10,
+              right: 10,
+              left: 10,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColors.gradientBottomColor,
+                  borderRadius: .circular(12),
+                ),
+                padding: .all(10),
+                child: Row(
+                  spacing: 10,
+                  children: [
+                    ClipRRect(
+                      borderRadius: .circular(8),
+                      child: Image.asset(AssetRes.holdItOnImg),
+                    ),
+                    Expanded(child: Column(
+                      crossAxisAlignment: .start,
+                      children: [
+                        Text("Hold It On", style: AppTextStyles.screenTitle,),
+                        Text("The angry Coach Series", style: AppTextStyles.miniPlayerTitle,)
+                      ],
+                    )),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.1),
+                        shape: .circle
+                      ),
+                      padding: .all(15),
+                      child: SvgPicture.asset(AssetRes.icPlay, height: 24,),
+                    )
+                  ],
+                ),
+              ))
         ],
       ),
     );
@@ -150,17 +166,6 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Padding(
         padding: .symmetric(horizontal: 16.5, vertical: 23),
         child: SvgPicture.asset(icon,),
-      ),
-    );
-  }
-
-  Widget _buildProfileAvatar() {
-    return ClipOval(
-      child: Image.asset(
-        AssetRes.imgProfile,
-        width: NumberConstant.profileImageSize,
-        height: NumberConstant.profileImageSize,
-        fit: .cover,
       ),
     );
   }
