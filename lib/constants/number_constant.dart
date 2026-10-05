@@ -37,4 +37,16 @@ class NumberConstant {
   static const homeMiniPlayerSlideOffset = 40.0;
   static const homeCardPressScale = 0.97;
   static const homeFeaturedInactiveScale = 0.94;
+  static const playerEntranceDurationMs = 1100;
+  static const playerAnimFastMs = 220;
+  static const playerAnimMediumMs = 400;
+  static const playerPlaybackLoopMs = 2800;
+  static const playerPulseLoopMs = 1400;
+  static const playerSlideOffset = 28.0;
+  static const playerControlsSlideOffset = 52.0;
+  static const playerBgStartScale = 1.06;
+  static const playerPlayStartScale = 0.72;
+  static const playerRingPulseScale = 1.045;
+  static const playerWaveMinOpacity = 0.45;
+  static const playerPlayPressScale = 0.92;
 }
