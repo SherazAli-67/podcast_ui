@@ -18,7 +18,7 @@ class NumberConstant {
   static const gridGap = 14.0;
   static const playButtonPadding = 22.0;
   static const transportIconPadding = 12.0;
-  static const chipHorizontalPadding = 18.0;
+  static const chipHorizontalPadding = 16.0;
   static const chipVerticalPadding = 10.0;
   static const cardOverlayPadding = 14.0;
 }

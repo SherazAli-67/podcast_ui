@@ -18,11 +18,11 @@ class AssetRes {
   static const welcomePageImg = 'assets/images/welcome_page_img.png';
   static const imgFeaturedNickJohn = 'assets/images/img_featured_nick_john.png';
   static const imgAngryCoach = 'assets/images/img_angry_coach.png';
-  static const imgGiveItAShot = 'assets/images/img_give_it_a_shot.png';
-  static const imgAmazingLife = 'assets/images/img_amazing_life.png';
-  static const imgFamilyMatters = 'assets/images/img_family_matters.png';
-  static const imgFeelings = 'assets/images/img_feelings.png';
-  static const imgProfile = 'assets/images/img_profile.png';
+  static const imgGiveItAShot = 'assets/images/give_it_shot_podcast_img.png';
+  static const imgAmazingLife = 'assets/images/amazing_life_podcast_img.png';
+  static const imgFamilyMatters = 'assets/images/third_podcast_img.png';
+  static const imgFeelings = 'assets/images/last_podcat_img.png';
+  static const imgProfile = 'assets/images/hold_it_on_podcast_img.png';
   static const decoratedBanner = 'assets/images/decorated_banner.png';
   static const nickImg = 'assets/images/nick_img.png';
   static const johnImg = 'assets/images/john_img.png';

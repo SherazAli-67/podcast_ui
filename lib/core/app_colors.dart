@@ -16,4 +16,5 @@ class AppColors {
   static const overlayGradientColor = Color(0xCC000000);
   static const transparentColor = Color(0x00000000);
   static const gradientColor = Color(0xffB05D61);
+  static const chipUnSelectedLabelColor = Color(0xffFFEFF0);
 }

@@ -37,16 +37,19 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           _buildBackground(),
           SafeArea(
-            child: Padding(
+            child: SingleChildScrollView(
               padding: .symmetric(horizontal: NumberConstant.horizontalPadding, vertical: NumberConstant.screenTopPadding),
               child: Column(
                 crossAxisAlignment: .start,
                 spacing: NumberConstant.sectionSpacing,
                 children: [
                   _buildHeader(),
-                _buildSectionTitle(),
-
+                  _buildSectionTitle(),
                   _buildFeaturedCarousel(),
+
+                  _buildCategoryChips(),
+
+                  _buildShowsGrid(shows),
                 /*  Expanded(
                     child: ListView(
                       padding: .only(bottom: NumberConstant.sectionSpacing),
@@ -198,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: .center,
                 spacing: 10,
                 children: [
-                  Text(show.title, style: AppTextStyles.episodeTitle.copyWith(color: AppColors.goldColor, fontFamily: StringConst.heloTypeFontFamily),),
+                  Text(show.title, style: AppTextStyles.episodeTitle.copyWith(color: AppColors.goldColor, fontFamily: StringConst.heloTypeFontFamily), textAlign: .center,),
                   Text(show.subtitle, style: AppTextStyles.showHost, textAlign: .center,)
                 ],
               ),
@@ -228,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: () => setState(() => _selectedCategory = category),
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.whiteColor : AppColors.chipUnselectedColor,
+          color: isSelected ? AppColors.whiteColor : AppColors.whiteColor.withValues(alpha: 0.09),
           borderRadius: .circular(NumberConstant.chipRadius),
         ),
         child: Padding(
@@ -238,9 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           child: Text(
             category,
-            style: AppTextStyles.chipLabel.copyWith(
-              color: isSelected ? AppColors.blackColor : AppColors.whiteColor,
-            ),
+            style: AppTextStyles.chipLabel.copyWith(color: isSelected ? AppColors.blackColor : AppColors.chipUnSelectedLabelColor.withValues(alpha: 0.76),),
           ),
         ),
       ),
