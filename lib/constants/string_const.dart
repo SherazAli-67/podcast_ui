@@ -1,5 +1,7 @@
 class StringConst {
   static const appTitle = 'Podcast';
+  static const heloTypeFontFamily = 'Helotypo';
+  static const appFontFamilyPoppins = 'Poppins';
   static const welcomeHeadlineLine1 = 'Enjoy Your Podcast';
   static const welcomeHeadlineLine2 = 'Enjoy Your Life';
   static const welcomeSubtitle =

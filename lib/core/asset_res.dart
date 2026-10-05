@@ -23,4 +23,7 @@ class AssetRes {
   static const imgFamilyMatters = 'assets/images/img_family_matters.png';
   static const imgFeelings = 'assets/images/img_feelings.png';
   static const imgProfile = 'assets/images/img_profile.png';
+  static const decoratedBanner = 'assets/images/decorated_banner.png';
+  static const nickImg = 'assets/images/nick_img.png';
+  static const johnImg = 'assets/images/john_img.png';
 }

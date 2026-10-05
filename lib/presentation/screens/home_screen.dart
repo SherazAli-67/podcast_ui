@@ -19,9 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String _selectedCategory = AppData.defaultCategory;
-  late final PageController _featuredController = PageController(
-    viewportFraction: NumberConstant.featuredCarouselViewportFraction,
-  );
+  late final PageController _featuredController = PageController(viewportFraction: NumberConstant.featuredCarouselViewportFraction,);
 
   @override
   void dispose() {
@@ -40,18 +38,16 @@ class _HomeScreenState extends State<HomeScreen> {
           _buildBackground(),
           SafeArea(
             child: Padding(
-              padding: .fromLTRB(
-                NumberConstant.horizontalPadding,
-                NumberConstant.screenTopPadding,
-                NumberConstant.horizontalPadding,
-                0,
-              ),
+              padding: .symmetric(horizontal: NumberConstant.horizontalPadding, vertical: NumberConstant.screenTopPadding),
               child: Column(
                 crossAxisAlignment: .start,
                 spacing: NumberConstant.sectionSpacing,
                 children: [
                   _buildHeader(),
-                  Expanded(
+                _buildSectionTitle(),
+
+                  _buildFeaturedCarousel(),
+                /*  Expanded(
                     child: ListView(
                       padding: .only(bottom: NumberConstant.sectionSpacing),
                       children: [
@@ -67,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                  ),
+                  ),*/
                 ],
               ),
             ),
@@ -103,10 +99,6 @@ class _HomeScreenState extends State<HomeScreen> {
               0, 0, 1, 0, 0,
               0, 0, 0, 10, 0,
             ]),
-            child: Image(
-              image: AssetImage(AssetRes.welcomePageHeaderRings),
-              fit: .contain,
-            ),
           ),
         ),
       ],
@@ -133,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildHeader() {
     return Row(
       children: [
-        _buildDrawerButton(),
+        _buildDecoratedIcon(icon: AssetRes.icDrawer),
         const Expanded(
           child: Text(
             StringConst.homeTitle,
@@ -141,20 +133,20 @@ class _HomeScreenState extends State<HomeScreen> {
             textAlign: .center,
           ),
         ),
-        _buildProfileAvatar(),
+        _buildDecoratedIcon(icon: AssetRes.icSearch)
       ],
     );
   }
 
-  Widget _buildDrawerButton() {
+  Widget _buildDecoratedIcon({required String icon}) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: AppColors.iconButtonBackgroundColor,
+        color: AppColors.whiteColor.withValues(alpha: 0.1),
         shape: .circle,
       ),
       child: Padding(
-        padding: .symmetric(horizontal: 13, vertical: 18),
-        child: SvgPicture.asset(AssetRes.icDrawer,),
+        padding: .symmetric(horizontal: 16.5, vertical: 23),
+        child: SvgPicture.asset(icon,),
       ),
     );
   }
@@ -186,32 +178,31 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Container(
         height: NumberConstant.featuredCardHeight,
         decoration: BoxDecoration(
-          color: AppColors.surfaceColor,
+          image: DecorationImage(image: AssetImage(AssetRes.decoratedBanner), fit: .cover),
           borderRadius: .circular(NumberConstant.cardRadius),
         ),
         clipBehavior: .hardEdge,
-        child: Row(
+        child: Stack(
+          alignment: .center,
           children: [
-            Image.asset(
-              show.coverImage,
-              width: NumberConstant.featuredImageWidth,
-              height: NumberConstant.featuredCardHeight,
-              fit: .cover,
-            ),
-            Expanded(
-              child: Padding(
-                padding: .all(NumberConstant.cardOverlayPadding),
-                child: Column(
-                  crossAxisAlignment: .start,
-                  mainAxisAlignment: .center,
-                  spacing: NumberConstant.chipSpacing,
-                  children: [
-                    Text(show.title, style: AppTextStyles.featuredTitle,),
-                    Text(show.subtitle, style: AppTextStyles.featuredSubtitle,),
-                  ],
-                ),
+            Positioned(
+                left: 0,
+                child: Image.asset(AssetRes.nickImg)),
+            Positioned(
+                right: 0,
+                child: Image.asset(AssetRes.johnImg)),
+            Positioned(
+              left: 50,
+              right: 50,
+              child: Column(
+                mainAxisAlignment: .center,
+                spacing: 10,
+                children: [
+                  Text(show.title, style: AppTextStyles.episodeTitle.copyWith(color: AppColors.goldColor, fontFamily: StringConst.heloTypeFontFamily),),
+                  Text(show.subtitle, style: AppTextStyles.showHost, textAlign: .center,)
+                ],
               ),
-            ),
+            )
           ],
         ),
       ),

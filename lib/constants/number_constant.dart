@@ -1,7 +1,7 @@
 class NumberConstant {
   static const horizontalPadding = 20.0;
   static const screenTopPadding = 16.0;
-  static const sectionSpacing = 20.0;
+  static const sectionSpacing = 21.0;
   static const itemSpacing = 12.0;
   static const chipSpacing = 10.0;
   static const cardRadius = 24.0;
