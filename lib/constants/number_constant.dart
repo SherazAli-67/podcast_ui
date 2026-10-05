@@ -24,4 +24,10 @@ class NumberConstant {
   static const chipHorizontalPadding = 16.0;
   static const chipVerticalPadding = 10.0;
   static const cardOverlayPadding = 14.0;
+  static const welcomeProgressValue = 0.6;
+  static const welcomeEntranceDurationMs = 900;
+  static const welcomeButtonPressScale = 0.96;
+  static const welcomeSlideOffset = 24.0;
+  static const welcomePreviewSlideOffset = 48.0;
+  static const welcomeRingsStartScale = 0.95;
 }
