@@ -26,4 +26,6 @@ class AssetRes {
   static const decoratedBanner = 'assets/images/decorated_banner.png';
   static const nickImg = 'assets/images/nick_img.png';
   static const johnImg = 'assets/images/john_img.png';
+  static const playerScreenBgImg = 'assets/images/player_screen_bg.png';
+  static const playerScreenUserImg = 'assets/images/player_screen_img.png';
 }

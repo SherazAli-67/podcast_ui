@@ -14,4 +14,8 @@ class StringConst {
   static const categoryFriends = 'Friends';
   static const categoryFeelings = 'Feelings';
   static const timeSeparator = '/';
+
+  static const playerScreenSubtitles = '''This is going to be funny, but Ammmm
+What makes me angry John is the fact that
+leaders invest time in networking ''';
 }

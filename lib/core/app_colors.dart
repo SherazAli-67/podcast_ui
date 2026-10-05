@@ -17,4 +17,5 @@ class AppColors {
   static const transparentColor = Color(0x00000000);
   static const gradientColor = Color(0xffB05D61);
   static const chipUnSelectedLabelColor = Color(0xffFFEFF0);
+  static const pinkBgColor = Color(0xffA4555A);
 }
