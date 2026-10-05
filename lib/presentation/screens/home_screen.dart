@@ -31,11 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final shows = AppData.showsForCategory(_selectedCategory);
     return Scaffold(
-      backgroundColor: AppColors.gradientBottomColor,
+      // backgroundColor: AppColors.gradientBottomColor,
       body: Stack(
         fit: .expand,
         children: [
-          _buildBackground(),
           SafeArea(
             child: SingleChildScrollView(
               padding: .symmetric(horizontal: NumberConstant.horizontalPadding, vertical: NumberConstant.screenTopPadding),
@@ -53,36 +52,47 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Positioned(
-            bottom: 10,
+            bottom: 40,
               right: 10,
               left: 10,
               child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.gradientBottomColor,
+              /*  decoration: BoxDecoration(
+                  color: AppColors.currentPlayerBgColor,
                   borderRadius: .circular(12),
-                ),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(0,4),
+                      blurRadius: 27,
+                      spreadRadius: 0,
+                      color: Colors.black.withValues(alpha: 0.25)
+                    )
+                  ]
+                ),*/
                 padding: .all(10),
                 child: Row(
                   spacing: 10,
                   children: [
                     ClipRRect(
                       borderRadius: .circular(8),
-                      child: Image.asset(AssetRes.holdItOnImg),
+                      //holdItImg
+                      child: const SizedBox()
                     ),
                     Expanded(child: Column(
                       crossAxisAlignment: .start,
                       children: [
-                        Text("Hold It On", style: AppTextStyles.screenTitle,),
-                        Text("The angry Coach Series", style: AppTextStyles.miniPlayerTitle,)
+                        //Hold It On, screenTitle,
+                        Text("", style: AppTextStyles.screenTitle,),
+                        //The angry Coach Series, miniPlayerTitle
+                        Text("", style: AppTextStyles.miniPlayerTitle,)
                       ],
                     )),
                     Container(
-                      decoration: BoxDecoration(
+                    /*  decoration: BoxDecoration(
                         color: Colors.white.withValues(alpha: 0.1),
                         shape: .circle
-                      ),
+                      ),*/
                       padding: .all(15),
-                      child: SvgPicture.asset(AssetRes.icPlay, height: 24,),
+                      //icPlay, 24
                     )
                   ],
                 ),
@@ -144,15 +154,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildHeader() {
     return Row(
       children: [
-        _buildDecoratedIcon(icon: AssetRes.icDrawer),
+        //decoratedIcon: icDrawer
         const Expanded(
           child: Text(
-            StringConst.homeTitle,
+            //homeTitle
+            '',
             style: AppTextStyles.screenTitle,
             textAlign: .center,
           ),
         ),
-        _buildDecoratedIcon(icon: AssetRes.icSearch)
+        //decoratedIcon: icSearch
       ],
     );
   }
@@ -174,8 +185,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Row(
       spacing: NumberConstant.chipSpacing,
       children: [
-        const Text(StringConst.podcastForYou, style: AppTextStyles.sectionTitle,),
-        SvgPicture.asset(AssetRes.icStar,),
+        //podcastForYour, sectionTitle,
+        //icStar
       ],
     );
   }
@@ -184,10 +195,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return GestureDetector(
       onTap: () => _openPlayer(show),
       child: Container(
-        height: NumberConstant.featuredCardHeight,
         decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(AssetRes.decoratedBanner), fit: .cover),
-          borderRadius: .circular(NumberConstant.cardRadius),
+          // image: DecorationImage(image: AssetImage(AssetRes.decoratedBanner), fit: .cover),
+          // borderRadius: .circular(NumberConstant.cardRadius),
         ),
         clipBehavior: .hardEdge,
         child: Stack(
@@ -195,10 +205,15 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Positioned(
                 left: 0,
-                child: Image.asset(AssetRes.nickImg)),
+
+                //nickImg
+                child: const SizedBox()
+            ),
             Positioned(
                 right: 0,
-                child: Image.asset(AssetRes.johnImg)),
+                //johnImg
+                child: const SizedBox()
+            ),
             Positioned(
               left: 50,
               right: 50,
@@ -206,8 +221,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: .center,
                 spacing: 10,
                 children: [
-                  Text(show.title, style: AppTextStyles.episodeTitle.copyWith(color: AppColors.goldColor, fontFamily: StringConst.heloTypeFontFamily), textAlign: .center,),
-                  Text(show.subtitle, style: AppTextStyles.showHost, textAlign: .center,)
+                  //show.title, episodeTitle.with: goldColor, heloTypeFont, .center,
+                  //show.subtitle, showHost, .center
                 ],
               ),
             )
@@ -236,18 +251,16 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: () => setState(() => _selectedCategory = category),
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.whiteColor : AppColors.whiteColor.withValues(alpha: 0.09),
-          borderRadius: .circular(NumberConstant.chipRadius),
+          // color: isSelected ? AppColors.whiteColor : AppColors.whiteColor.withValues(alpha: 0.09),
+          // borderRadius: .circular(NumberConstant.chipRadius),
         ),
         child: Padding(
           padding: .symmetric(
-            horizontal: NumberConstant.chipHorizontalPadding,
-            vertical: NumberConstant.chipVerticalPadding,
+            // horizontal: NumberConstant.chipHorizontalPadding,
+            // vertical: NumberConstant.chipVerticalPadding,
           ),
-          child: Text(
-            category,
-            style: AppTextStyles.chipLabel.copyWith(color: isSelected ? AppColors.blackColor : AppColors.chipUnSelectedLabelColor.withValues(alpha: 0.76),),
-          ),
+          //category, chipLabel, isSelected: black:unSelectedChip.76
+          child: const SizedBox()
         ),
       ),
     );
@@ -312,17 +325,17 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Stack(
             fit: .expand,
             children: [
-              Image.asset(show.coverImage, fit: .cover,),
+              // Image.asset(show.coverImage, fit: .cover,),
               const DecoratedBox(
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
+                /*  gradient: LinearGradient(
                     begin: .topCenter,
                     end: .bottomCenter,
                     colors: [
                       AppColors.transparentColor,
                       AppColors.overlayGradientColor,
                     ],
-                  ),
+                  ),*/
                 ),
               ),
               Positioned(
@@ -333,8 +346,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: .start,
                   spacing: 4,
                   children: [
-                    Text(show.title, style: AppTextStyles.showTitle,),
-                    Text(show.host, style: AppTextStyles.showHost,),
+                    //show.title, showTitle,
+                    //show.host, showHost
                   ],
                 ),
               ),
