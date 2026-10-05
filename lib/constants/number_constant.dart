@@ -16,7 +16,10 @@ class NumberConstant {
   static const showCardTallAspectRatio = 0.72;
   static const showCardShortAspectRatio = 0.95;
   static const gridGap = 14.0;
-  static const playButtonPadding = 22.0;
+  static const playButtonPadding = 18.0;
+  static const playRingHeight = 95.0;
+  static const playerArtworkHeight = 340.0;
+  static const playerIconPadding = 16.0;
   static const transportIconPadding = 12.0;
   static const chipHorizontalPadding = 16.0;
   static const chipVerticalPadding = 10.0;
