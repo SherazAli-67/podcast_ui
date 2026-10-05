@@ -27,7 +27,7 @@ class AppTextStyles {
   static const screenTitle = TextStyle(
     fontFamily: 'Poppins',
     fontWeight: FontWeight.w500,
-    fontSize: 20,
+    fontSize: 22,
     color: AppColors.whiteColor,
   );
 

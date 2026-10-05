@@ -12,6 +12,32 @@ class AppData {
 
   static const defaultCategory = StringConst.categoryFamily;
 
+  static const featuredShows = [
+    featuredShow,
+    PodcastShow(
+      id: 'featured_angry_coach',
+      title: 'The Angry Coach',
+      host: 'The Angry Coach',
+      episodeTitle: 'Turning Connection into Opportunities',
+      coverImage: AssetRes.imgAngryCoach,
+      category: StringConst.categoryRelation,
+      duration: '02:34',
+      currentTime: '00:23',
+      subtitle: 'Turning Connection into Opportunities',
+    ),
+    PodcastShow(
+      id: 'featured_give_it_a_shot',
+      title: 'Give It A Shot',
+      host: 'Robert James',
+      episodeTitle: 'Give It A Shot',
+      coverImage: AssetRes.imgGiveItAShot,
+      category: StringConst.categoryFamily,
+      duration: '03:12',
+      currentTime: '00:00',
+      subtitle: 'Robert James',
+    ),
+  ];
+
   static const featuredShow = PodcastShow(
     id: 'featured_nick_john',
     title: 'Nick & John',
@@ -37,23 +63,23 @@ class AppData {
 
   static const shows = [
     PodcastShow(
-      id: 'give_it_a_shot',
-      title: 'Give it A Shot',
-      host: 'Robert James',
-      episodeTitle: 'Give it A Shot',
-      coverImage: AssetRes.imgGiveItAShot,
+      id: 'orange_host',
+      title: 'Daily Talks',
+      host: 'Alex Morgan',
+      episodeTitle: 'Daily Talks',
+      coverImage: AssetRes.imgAmazingLife,
       category: StringConst.categoryFamily,
-      duration: '03:12',
+      duration: '03:45',
       currentTime: '00:00',
     ),
     PodcastShow(
-      id: 'amazing_life',
-      title: 'Amazing Life',
-      host: 'Dr. Erik',
-      episodeTitle: 'Amazing Life',
-      coverImage: AssetRes.imgAmazingLife,
-      category: StringConst.categoryFriends,
-      duration: '04:05',
+      id: 'give_it_a_shot',
+      title: 'Give It A Shot',
+      host: 'Robert James',
+      episodeTitle: 'Give It A Shot',
+      coverImage: AssetRes.imgGiveItAShot,
+      category: StringConst.categoryFamily,
+      duration: '03:12',
       currentTime: '00:00',
     ),
     PodcastShow(
@@ -64,6 +90,16 @@ class AppData {
       coverImage: AssetRes.imgFamilyMatters,
       category: StringConst.categoryFamily,
       duration: '05:20',
+      currentTime: '00:00',
+    ),
+    PodcastShow(
+      id: 'amazing_life',
+      title: 'Amazing Life',
+      host: 'Dr. Erik',
+      episodeTitle: 'Amazing Life',
+      coverImage: AssetRes.imgAmazingLife,
+      category: StringConst.categoryFriends,
+      duration: '04:05',
       currentTime: '00:00',
     ),
     PodcastShow(
@@ -97,9 +133,26 @@ class AppData {
       currentTime: '00:00',
       subtitle: 'Solving your family matters & relation',
     ),
+    PodcastShow(
+      id: 'soft_feelings',
+      title: 'Soft Hours',
+      host: 'Lena Park',
+      episodeTitle: 'Soft Hours',
+      coverImage: AssetRes.imgFeelings,
+      category: StringConst.categoryFamily,
+      duration: '02:10',
+      currentTime: '00:00',
+    ),
   ];
 
   static List<PodcastShow> showsForCategory(String category) {
     return shows.where((show) => show.category == category).toList();
+  }
+
+  static PodcastShow showById(String id) {
+    return shows.firstWhere(
+      (show) => show.id == id,
+      orElse: () => nowPlaying,
+    );
   }
 }

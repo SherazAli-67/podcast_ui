@@ -8,7 +8,10 @@ GoRouter router = GoRouter(
   routes: [
     GoRoute(path: NamedRoutes.welcome.routeName, builder: (ctx, state) => const WelcomeScreen(),),
     GoRoute(path: NamedRoutes.home.routeName, builder: (ctx, state) => const HomeScreen(),),
-    GoRoute(path: NamedRoutes.player.routeName, builder: (ctx, state) => const PlayerScreen(),),
+    GoRoute(
+      path: NamedRoutes.player.routeName,
+      builder: (ctx, state) => PlayerScreen(showId: state.uri.queryParameters['id'],),
+    ),
   ],
 );
 
