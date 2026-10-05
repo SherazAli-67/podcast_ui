@@ -29,8 +29,22 @@ class WelcomeScreen extends StatelessWidget {
                 crossAxisAlignment: .start,
                 spacing: NumberConstant.sectionSpacing,
                 children: [
-                  _buildHeadline(),
-                  _buildSubtitle(),
+                  LinearProgressIndicator(value: 0.6, minHeight: 1, color: Colors.white, backgroundColor: Colors.white.withValues(alpha: 0.3),),
+                  RichText(text: TextSpan(
+                    text: 'Enjoy Your ', style: TextStyle(fontSize: 40, fontFamily: StringConst.appFontFamilyPoppins, fontWeight: .w400),
+                    children: [
+                      TextSpan(
+                        text: "Podcast, ", style: AppTextStyles.welcomeHeadline
+                      ),
+                      TextSpan(
+                        text: 'Enjoy Your ', style: TextStyle(fontSize: 40, fontFamily: StringConst.appFontFamilyPoppins, fontWeight: .w400),
+                      ),
+                      TextSpan(
+                          text: "Life", style: AppTextStyles.welcomeHeadline
+                      ),
+                    ]
+                  )),
+                  Text(StringConst.welcomeSubtitle, style: AppTextStyles.welcomeSubtitle,),
                   _buildGetStartedButton(context),
                 ],
               ),
@@ -49,26 +63,11 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeadline() {
-    return const Column(
-      crossAxisAlignment: .start,
-      spacing: NumberConstant.itemSpacing,
-      children: [
-        Text(StringConst.welcomeHeadlineLine1, style: AppTextStyles.welcomeHeadline,),
-        Text(StringConst.welcomeHeadlineLine2, style: AppTextStyles.welcomeHeadline,),
-      ],
-    );
-  }
-
-  Widget _buildSubtitle() {
-    return const Text(StringConst.welcomeSubtitle, style: AppTextStyles.welcomeSubtitle,);
-  }
-
   Widget _buildGetStartedButton(BuildContext context) {
     return Align(
       alignment: .centerLeft,
       child: Material(
-        color: AppColors.whiteColor,
+        color: AppColors.pinkBgColor,
         borderRadius: .circular(NumberConstant.buttonRadius),
         child: InkWell(
           onTap: () => context.go(NamedRoutes.home.routeName),
