@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: StringConst.appTitle,
       theme: ThemeData(
         brightness: .dark,
-        scaffoldBackgroundColor: AppColors.backgroundColor,
+        // scaffoldBackgroundColor: AppColors.backgroundColor,
         fontFamily: 'Poppins',
       ),
       builder: (ctx, child) {

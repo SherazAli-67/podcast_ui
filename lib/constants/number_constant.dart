@@ -30,4 +30,11 @@ class NumberConstant {
   static const welcomeSlideOffset = 24.0;
   static const welcomePreviewSlideOffset = 48.0;
   static const welcomeRingsStartScale = 0.95;
+  static const homeEntranceDurationMs = 800;
+  static const homeAnimFastMs = 200;
+  static const homeAnimMediumMs = 350;
+  static const homeSlideOffset = 20.0;
+  static const homeMiniPlayerSlideOffset = 40.0;
+  static const homeCardPressScale = 0.97;
+  static const homeFeaturedInactiveScale = 0.94;
 }

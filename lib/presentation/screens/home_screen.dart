@@ -17,13 +17,36 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   String _selectedCategory = AppData.defaultCategory;
+  String? _pressedShowId;
   late final PageController _featuredController = PageController(viewportFraction: NumberConstant.featuredCarouselViewportFraction,);
+  late final AnimationController _entranceController = AnimationController(
+    vsync: this,
+    duration: Duration(milliseconds: NumberConstant.homeEntranceDurationMs),
+  )..forward();
+
+  late final Animation<double> _headerFade = _curved(.0, .3);
+  late final Animation<Offset> _headerSlide = Tween(begin: Offset(0, NumberConstant.homeSlideOffset), end: Offset.zero).animate(_curved(.0, .3));
+  late final Animation<double> _titleFade = _curved(.1, .4);
+  late final Animation<Offset> _titleSlide = Tween(begin: Offset(0, NumberConstant.homeSlideOffset), end: Offset.zero).animate(_curved(.1, .4));
+  late final Animation<double> _carouselFade = _curved(.2, .5);
+  late final Animation<Offset> _carouselSlide = Tween(begin: Offset(0, NumberConstant.homeSlideOffset), end: Offset.zero).animate(_curved(.2, .5));
+  late final Animation<double> _chipsFade = _curved(.35, .6);
+  late final Animation<Offset> _chipsSlide = Tween(begin: Offset(0, NumberConstant.homeSlideOffset), end: Offset.zero).animate(_curved(.35, .6));
+  late final Animation<double> _gridFade = _curved(.45, .75);
+  late final Animation<Offset> _gridSlide = Tween(begin: Offset(0, NumberConstant.homeSlideOffset), end: Offset.zero).animate(_curved(.45, .75));
+  late final Animation<double> _miniPlayerFade = _curved(.55, .9);
+  late final Animation<Offset> _miniPlayerSlide = Tween(begin: Offset(0, NumberConstant.homeMiniPlayerSlideOffset), end: Offset.zero).animate(_curved(.55, .9));
+
+  CurvedAnimation _curved(double begin, double end) {
+    return CurvedAnimation(parent: _entranceController, curve: Interval(begin, end, curve: Curves.easeOutCubic),);
+  }
 
   @override
   void dispose() {
     _featuredController.dispose();
+    _entranceController.dispose();
     super.dispose();
   }
 
@@ -31,106 +54,93 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final shows = AppData.showsForCategory(_selectedCategory);
     return Scaffold(
-      // backgroundColor: AppColors.gradientBottomColor,
-      body: Stack(
-        fit: .expand,
-        children: [
-          SafeArea(
-            child: SingleChildScrollView(
-              padding: .symmetric(horizontal: NumberConstant.horizontalPadding, vertical: NumberConstant.screenTopPadding),
-              child: Column(
-                crossAxisAlignment: .start,
-                spacing: NumberConstant.sectionSpacing,
-                children: [
-                  _buildHeader(),
-                  _buildSectionTitle(),
-                  _buildFeaturedCarousel(),
-                  _buildCategoryChips(),
-                  _buildShowsGrid(shows),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 40,
-              right: 10,
-              left: 10,
-              child: Container(
-              /*  decoration: BoxDecoration(
-                  color: AppColors.currentPlayerBgColor,
-                  borderRadius: .circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      offset: Offset(0,4),
-                      blurRadius: 27,
-                      spreadRadius: 0,
-                      color: Colors.black.withValues(alpha: 0.25)
-                    )
-                  ]
-                ),*/
-                padding: .all(10),
-                child: Row(
-                  spacing: 10,
+      backgroundColor: AppColors.backgroundColor,
+      body: AnimatedBuilder(
+        animation: _entranceController,
+        builder: (context, child) => Stack(
+          fit: .expand,
+          children: [
+            SafeArea(
+              child: SingleChildScrollView(
+                padding: .symmetric(horizontal: NumberConstant.horizontalPadding, vertical: NumberConstant.screenTopPadding),
+                child: Column(
+                  crossAxisAlignment: .start,
+                  spacing: NumberConstant.sectionSpacing,
                   children: [
-                    ClipRRect(
-                      borderRadius: .circular(8),
-                      //holdItImg
-                      child: const SizedBox()
+                    Transform.translate(offset: _headerSlide.value, child: Opacity(opacity: _headerFade.value, child: _buildHeader(),),),
+                    Transform.translate(offset: _titleSlide.value, child: Opacity(opacity: _titleFade.value, child: _buildSectionTitle(),),),
+                    Transform.translate(offset: _carouselSlide.value, child: Opacity(opacity: _carouselFade.value, child: _buildFeaturedCarousel(),),),
+                    Transform.translate(offset: _chipsSlide.value, child: Opacity(opacity: _chipsFade.value, child: _buildCategoryChips(),),),
+                    Transform.translate(
+                      offset: _gridSlide.value,
+                      child: Opacity(
+                        opacity: _gridFade.value,
+                        child: AnimatedSwitcher(
+                          duration: Duration(milliseconds: NumberConstant.homeAnimMediumMs),
+                          switchInCurve: Curves.easeOutCubic,
+                          switchOutCurve: Curves.easeInCubic,
+                          child: KeyedSubtree(key: ValueKey(_selectedCategory), child: _buildShowsGrid(shows),),
+                        ),
+                      ),
                     ),
-                    Expanded(child: Column(
-                      crossAxisAlignment: .start,
-                      children: [
-                        //Hold It On, screenTitle,
-                        Text("", style: AppTextStyles.screenTitle,),
-                        //The angry Coach Series, miniPlayerTitle
-                        Text("", style: AppTextStyles.miniPlayerTitle,)
-                      ],
-                    )),
-                    Container(
-                    /*  decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.1),
-                        shape: .circle
-                      ),*/
-                      padding: .all(15),
-                      //icPlay, 24
-                    )
                   ],
                 ),
-              ))
-        ],
+              ),
+            ),
+            Positioned(
+              bottom: 40,
+              right: 10,
+              left: 10,
+              child: Transform.translate(
+                offset: _miniPlayerSlide.value,
+                child: Opacity(opacity: _miniPlayerFade.value, child: _buildMiniPlayer(),),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildBackground() {
-    return const Stack(
-      fit: .expand,
-      children: [
-        DecoratedBox(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: .topCenter,
-              end: .bottomCenter,
-              colors: [
-                AppColors.gradientTopColor,
-                AppColors.backgroundColor,
-                AppColors.gradientBottomColor,
-              ],
+  Widget _buildMiniPlayer() {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.currentPlayerBgColor,
+        borderRadius: .circular(12),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 4),
+            blurRadius: 27,
+            spreadRadius: 0,
+            color: Colors.black.withValues(alpha: 0.25),
+          ),
+        ],
+      ),
+      padding: .all(10),
+      child: Row(
+        spacing: 10,
+        children: [
+          ClipRRect(
+            borderRadius: .circular(8),
+            child: Image.asset(AssetRes.holdItOnImg),
+          ),
+          Expanded(child: Column(
+            crossAxisAlignment: .start,
+            children: [
+              Text("Hold It On", style: AppTextStyles.screenTitle,),
+              Text("The angry Coach Series", style: AppTextStyles.miniPlayerTitle,),
+            ],
+          )),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.1),
+              shape: .circle,
             ),
+            padding: .all(15),
+            child: SvgPicture.asset(AssetRes.icPlay),
           ),
-        ),
-        Align(
-          alignment: .topLeft,
-          child: ColorFiltered(
-            colorFilter: ColorFilter.matrix(<double>[
-              1, 0, 0, 0, 0,
-              0, 1, 0, 0, 0,
-              0, 0, 1, 0, 0,
-              0, 0, 0, 10, 0,
-            ]),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -142,8 +152,24 @@ class _HomeScreenState extends State<HomeScreen> {
         padEnds: false,
         itemCount: AppData.featuredShows.length,
         itemBuilder: (context, index) {
-          return Padding(
-            padding: .only(right: NumberConstant.featuredCarouselGap),
+          return AnimatedBuilder(
+            animation: _featuredController,
+            builder: (context, child) {
+              final page = _featuredController.hasClients
+                  ? (_featuredController.page ?? _featuredController.initialPage.toDouble())
+                  : 0.0;
+              final distance = (page - index).abs();
+              final scale = (1 - (distance * (1 - NumberConstant.homeFeaturedInactiveScale))).clamp(NumberConstant.homeFeaturedInactiveScale, 1.0);
+              final opacity = (1 - (distance * 0.25)).clamp(0.7, 1.0);
+              return Padding(
+                padding: .only(right: NumberConstant.featuredCarouselGap),
+                child: Transform.scale(
+                  scale: scale,
+                  alignment: .centerLeft,
+                  child: Opacity(opacity: opacity, child: child,),
+                ),
+              );
+            },
             child: _buildFeaturedCard(AppData.featuredShows[index]),
           );
         },
@@ -154,16 +180,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildHeader() {
     return Row(
       children: [
-        //decoratedIcon: icDrawer
+        _buildDecoratedIcon(icon: AssetRes.icDrawer),
         const Expanded(
           child: Text(
-            //homeTitle
-            '',
+            StringConst.homeTitle,
             style: AppTextStyles.screenTitle,
             textAlign: .center,
           ),
         ),
-        //decoratedIcon: icSearch
+        _buildDecoratedIcon(icon: AssetRes.icSearch),
       ],
     );
   }
@@ -185,48 +210,54 @@ class _HomeScreenState extends State<HomeScreen> {
     return Row(
       spacing: NumberConstant.chipSpacing,
       children: [
-        //podcastForYour, sectionTitle,
-        //icStar
+        Text(StringConst.podcastForYou, style: AppTextStyles.sectionTitle,),
+        SvgPicture.asset(AssetRes.icSearch),
       ],
     );
   }
 
   Widget _buildFeaturedCard(PodcastShow show) {
+    final isPressed = _pressedShowId == show.id;
     return GestureDetector(
       onTap: () => _openPlayer(show),
-      child: Container(
-        decoration: BoxDecoration(
-          // image: DecorationImage(image: AssetImage(AssetRes.decoratedBanner), fit: .cover),
-          // borderRadius: .circular(NumberConstant.cardRadius),
-        ),
-        clipBehavior: .hardEdge,
-        child: Stack(
-          alignment: .center,
-          children: [
-            Positioned(
+      onTapDown: (_) => setState(() => _pressedShowId = show.id),
+      onTapUp: (_) => setState(() => _pressedShowId = null),
+      onTapCancel: () => setState(() => _pressedShowId = null),
+      child: AnimatedScale(
+        scale: isPressed ? NumberConstant.homeCardPressScale : 1,
+        duration: Duration(milliseconds: NumberConstant.homeAnimFastMs),
+        curve: Curves.easeOut,
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage(AssetRes.decoratedBanner), fit: .cover),
+            borderRadius: .circular(NumberConstant.cardRadius),
+          ),
+          clipBehavior: .hardEdge,
+          child: Stack(
+            alignment: .center,
+            children: [
+              Positioned(
                 left: 0,
-
-                //nickImg
-                child: const SizedBox()
-            ),
-            Positioned(
-                right: 0,
-                //johnImg
-                child: const SizedBox()
-            ),
-            Positioned(
-              left: 50,
-              right: 50,
-              child: Column(
-                mainAxisAlignment: .center,
-                spacing: 10,
-                children: [
-                  //show.title, episodeTitle.with: goldColor, heloTypeFont, .center,
-                  //show.subtitle, showHost, .center
-                ],
+                child: Image.asset(AssetRes.nickImg),
               ),
-            )
-          ],
+              Positioned(
+                right: 0,
+                child: Image.asset(AssetRes.johnImg),
+              ),
+              Positioned(
+                left: 50,
+                right: 50,
+                child: Column(
+                  mainAxisAlignment: .center,
+                  spacing: 10,
+                  children: [
+                    Text(show.title, style: AppTextStyles.episodeTitle.copyWith(color: AppColors.goldColor, fontFamily: StringConst.heloTypeFontFamily,), textAlign: .center,),
+                    Text(show.subtitle, style: AppTextStyles.showHost, textAlign: .center),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -249,18 +280,22 @@ class _HomeScreenState extends State<HomeScreen> {
     final isSelected = category == _selectedCategory;
     return GestureDetector(
       onTap: () => setState(() => _selectedCategory = category),
-      child: DecoratedBox(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: NumberConstant.homeAnimFastMs),
+        curve: Curves.easeInOut,
         decoration: BoxDecoration(
-          // color: isSelected ? AppColors.whiteColor : AppColors.whiteColor.withValues(alpha: 0.09),
-          // borderRadius: .circular(NumberConstant.chipRadius),
+          color: isSelected ? AppColors.whiteColor : AppColors.whiteColor.withValues(alpha: 0.09),
+          borderRadius: .circular(NumberConstant.chipRadius),
         ),
-        child: Padding(
-          padding: .symmetric(
-            // horizontal: NumberConstant.chipHorizontalPadding,
-            // vertical: NumberConstant.chipVerticalPadding,
-          ),
-          //category, chipLabel, isSelected: black:unSelectedChip.76
-          child: const SizedBox()
+        padding: .symmetric(
+          horizontal: NumberConstant.chipHorizontalPadding,
+          vertical: NumberConstant.chipVerticalPadding,
+        ),
+        child: AnimatedDefaultTextStyle(
+          duration: Duration(milliseconds: NumberConstant.homeAnimFastMs),
+          curve: Curves.easeInOut,
+          style: AppTextStyles.chipLabel.copyWith(color: isSelected ? AppColors.blackColor : AppColors.whiteColor.withValues(alpha: 0.76),),
+          child: Text(category),
         ),
       ),
     );
@@ -316,42 +351,51 @@ class _HomeScreenState extends State<HomeScreen> {
     required PodcastShow show,
     required double aspectRatio,
   }) {
+    final isPressed = _pressedShowId == show.id;
     return GestureDetector(
       onTap: () => _openPlayer(show),
-      child: AspectRatio(
-        aspectRatio: aspectRatio,
-        child: ClipRRect(
-          borderRadius: .circular(NumberConstant.cardRadius),
-          child: Stack(
-            fit: .expand,
-            children: [
-              // Image.asset(show.coverImage, fit: .cover,),
-              const DecoratedBox(
-                decoration: BoxDecoration(
-                /*  gradient: LinearGradient(
-                    begin: .topCenter,
-                    end: .bottomCenter,
-                    colors: [
-                      AppColors.transparentColor,
-                      AppColors.overlayGradientColor,
+      onTapDown: (_) => setState(() => _pressedShowId = show.id),
+      onTapUp: (_) => setState(() => _pressedShowId = null),
+      onTapCancel: () => setState(() => _pressedShowId = null),
+      child: AnimatedScale(
+        scale: isPressed ? NumberConstant.homeCardPressScale : 1,
+        duration: Duration(milliseconds: NumberConstant.homeAnimFastMs),
+        curve: Curves.easeOut,
+        child: AspectRatio(
+          aspectRatio: aspectRatio,
+          child: ClipRRect(
+            borderRadius: .circular(NumberConstant.cardRadius),
+            child: Stack(
+              fit: .expand,
+              children: [
+                Image.asset(show.coverImage, fit: .cover,),
+                const DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: .topCenter,
+                      end: .bottomCenter,
+                      colors: [
+                        AppColors.transparentColor,
+                        AppColors.overlayGradientColor,
+                      ],
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: NumberConstant.cardOverlayPadding,
+                  right: NumberConstant.cardOverlayPadding,
+                  bottom: NumberConstant.cardOverlayPadding,
+                  child: Column(
+                    crossAxisAlignment: .start,
+                    spacing: 4,
+                    children: [
+                      Text(show.title, style: AppTextStyles.showTitle,),
+                      Text(show.host, style: AppTextStyles.showHost,),
                     ],
-                  ),*/
+                  ),
                 ),
-              ),
-              Positioned(
-                left: NumberConstant.cardOverlayPadding,
-                right: NumberConstant.cardOverlayPadding,
-                bottom: NumberConstant.cardOverlayPadding,
-                child: Column(
-                  crossAxisAlignment: .start,
-                  spacing: 4,
-                  children: [
-                    //show.title, showTitle,
-                    //show.host, showHost
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
